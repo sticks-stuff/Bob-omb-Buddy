@@ -15,7 +15,12 @@ client.on('message', msg => {
         if (found != null) {
             for(i = 0; i < found.length; i++) {
                 result = found[i].slice(2,-2);
-                wiki({ apiUrl: 'https://ukikipedia.net/mediawiki/api.php' }).find(result).then(page => console.log(page.fullurl));
+                
+                wiki({ apiUrl: 'https://ukikipedia.net/mediawiki/api.php' }).find(result).then(page => {
+                    msg.channel.send(page.raw.fullurl);
+                  }, reason => {
+                    msg.channel.send(":octagonal_sign: **No article matching \"" + result + "\"**");
+                  });
             }
         }
     }
