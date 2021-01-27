@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const regex = /\[\[(.*?)\]\]/g;
+require('dotenv').config();
 
 const wiki = require('wikijs').default;
 
@@ -26,4 +27,4 @@ client.on('message', msg => {
     }
 });
 
-client.login('ODAzOTE2MTc3MTI5OTk2Mjg4.YBEvSA.mX2fTHERAHuslTiXS8QVwgS67iI');
+client.login(process.env.discordToken);
