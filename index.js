@@ -1,16 +1,24 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const regex = /\[\[(.*?)\]\]/g;
+
+const wiki = require('wikijs').default;
+
 
 client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
+    console.log(`Logged in as ${client.user.tag}!`);
 });
 
 client.on('message', msg => {
-  var regex = /\[(.*?)\]/g;
-  var found = msg.content.match(regex);
-  if (found != null) {
-    msg.reply('pong');
-  }
+    if(msg.author.bot != true) {
+        var found = msg.content.match(regex);
+        if (found != null) {
+            for(i = 0; i < found.length; i++) {
+                result = found[i].slice(2,-2);
+                wiki({ apiUrl: 'https://ukikipedia.net/mediawiki/api.php' }).find(result).then(page => console.log(page.fullurl));
+            }
+        }
+    }
 });
 
-client.login('ODAzOTE2MTc3MTI5OTk2Mjg4.YBEvSA.GfYPD1KOGl1yAt_XsT3WuLw8ImU');
+client.login('ODAzOTE2MTc3MTI5OTk2Mjg4.YBEvSA.mX2fTHERAHuslTiXS8QVwgS67iI');
