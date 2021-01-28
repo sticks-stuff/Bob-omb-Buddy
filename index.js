@@ -24,13 +24,13 @@ client.on('message', msg => {
                             msg.channel.send(page.raw.fullurl);
                         }, reason => {
                         if(fail === false) {
-                            msg.reply(":octagonal_sign: **One or more of the articles you requested could not be located!**");
+                            msg.channel.send(":octagonal_sign: **One or more of the articles you requested could not be located!**");
                             fail = true;
                         }
                     });
                 }
             } else {
-                msg.reply(":octagonal_sign: **Sorry! Five is the maximum number of requested articles**");
+                msg.channel.send(":octagonal_sign: **Sorry! Five is the maximum number of requested articles**");
             }
         }
     }
