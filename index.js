@@ -13,15 +13,24 @@ client.on('ready', () => {
 client.on('message', msg => {
     if(msg.author.bot != true) {
         var found = msg.content.match(regex);
+        var fail = false;
         if (found != null) {
-            for(i = 0; i < found.length; i++) {
-                result = found[i].slice(2,-2);
-                
-                wiki({ apiUrl: 'https://ukikipedia.net/mediawiki/api.php' }).find(result).then(page => {
-                    msg.channel.send(page.raw.fullurl);
-                  }, reason => {
-                    msg.channel.send(":octagonal_sign: **No article matching \"" + result + "\"**");
-                  });
+            if(found.length < 4) {
+                for(i = 0; i < found.length; i++) {
+                    var result = found[i].slice(2,-2);
+                    result = result.split(":").pop(); //this is a bad way to not let people make requests for user pages
+                    
+                    wiki({ apiUrl: 'https://ukikipedia.net/mediawiki/api.php' }).find(result).then(page => {
+                            msg.channel.send(page.raw.fullurl);
+                        }, reason => {
+                        if(fail === false) {
+                            msg.reply(":octagonal_sign: **One or more of the articles you requested could not be located!**");
+                            fail = true;
+                        }
+                    });
+                }
+            } else {
+                msg.reply(":octagonal_sign: **Sorry! Five is the maximum number of requested articles**");
             }
         }
     }
