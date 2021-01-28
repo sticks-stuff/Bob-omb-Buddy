@@ -8,6 +8,7 @@ const wiki = require('wikijs').default;
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
+    client.user.setActivity('for Ukikipedia article queries', {type: 'WATCHING'});
 });
 
 client.on('message', msg => {
@@ -24,7 +25,7 @@ client.on('message', msg => {
                             msg.channel.send(page.raw.fullurl);
                         }, reason => {
                         if(fail === false) {
-                            msg.channel.send(":octagonal_sign: **One or more of the articles you requested could not be located!**");
+                            msg.channel.send(":octagonal_sign: **One or more of the articles you requested could not be located!**"); //todo: could we be more specific about which errors get caught in this way?
                             fail = true;
                         }
                     });
