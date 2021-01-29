@@ -1,4 +1,4 @@
-# mechaKoopa
+# Bob-omb Buddy
 
 A simple JS discord bot to reply to messages with [[double brackets]] with a Ukikipedia article, if such one exists. 
 
